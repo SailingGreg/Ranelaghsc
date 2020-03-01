@@ -1,10 +1,8 @@
 #
-# dmschedule.py - construct dutyman upload file for duties
+# genloadfiles.py - construct dutyman and google calendar upload files
 #
 
 import datetime as dt
-#from datetime import timedelta
-#import string
 from openpyxl import Workbook
 from openpyxl import load_workbook
 
@@ -66,7 +64,6 @@ raceno = 0
 for row in sheet.iter_rows(min_row=6, min_col=3, max_col=9, values_only=True):
     # is there a date for an 'event'
     if (isinstance(row[0], dt.date)):
-        #print (type(row[0]), row[0], row[1], row[2], row[3])
 	
         # put a check in for 'time' - if this is blank there is no race!
         if (isinstance(row[4], dt.time)):
@@ -100,7 +97,6 @@ dutytypes = [ {"duty": "safety", "name": "Safety Boat"},
 # added to the working sheet
 x = 2 # start adding at row after heading
 for r in races:
-    #print (races[r]["name"].find("No Race"))
     # guard as some entries are 'No Race" with a time
     if (races[r]["name"].find("No Race") == -1):
         #print (races[r]["date"], races[r]["name"], \
@@ -170,7 +166,7 @@ for r in races:
 
         x = x + 1
 
-# and save the worksheet
+# and save the worksheets
 dmWorkbook.save(filename="ranelagh-dutyman.xlsx")
 calWorkbook.save(filename="ranelagh-google.xlsx")
 
